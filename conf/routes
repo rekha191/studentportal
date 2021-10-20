@@ -1,0 +1,27 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# https://www.playframework.com/documentation/latest/ScalaRouting
+# ~~~~
+
+# API/Rest End Point/ UR
+#  An example controller GET  /student/:name             controllers.HomeController.studentName(name:String)ler showing a sample home page
+GET     /                                                   controllers.HomeController.index()
+GET     /student/detail                                      controllers.HomeController.studentDetail()
+
+GET     /student/:name                                       controllers.HomeController.studentName(name:String)
+GET     /student/details/:name/:roll                        controllers.HomeController.studentNames(name:String,roll:Int)
+GET     /vaues/sum/:x/:y                             controllers.HomeController.sum(x:Int,y:Int)
+
+GET     /hello/:name                 controllers.HomeController.hello(name:String)
+
+GET     /login1                                  controllers.HomeController.login1
+GET     /validate1                          controllers.HomeController.validateLoginGet(username:String,password:String)
+
+# Users Controller
+GET     /registration                                  controllers.UsersController.registration
+POST     /registrationSubmit                         controllers.UsersController.registrationSubmit()
+
+
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
