@@ -50,10 +50,6 @@ class HomeController @Inject() (cc: ControllerComponents) extends AbstractContro
   }
 
 
-  def login1 = Action {
-
-    Ok(views.html.login1())
-  }
 
   def validateLoginGet(username: String, password: String) = Action {
     Ok(s"$username ,$password")

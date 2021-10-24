@@ -1,3 +1,3 @@
 package model
 
-case class Users (id:Option[String], name:String, email:String, password:String,rollno:Int)
+case class Users (id:Option[Long], name:String, email:String, password:String, rollNumber:Int)

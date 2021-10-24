@@ -13,24 +13,24 @@ class UsersDao @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
     import profile.api._
 
     private class UsersTable(tag: Tag) extends Table[Users](tag, "users") {
-      def id = column[Option[String]]("id", O.PrimaryKey , O.AutoInc)
-
+      def id = column[Option[Long]]("id", O.PrimaryKey , O.AutoInc)
       def name = column[String]("name")
-
       def email = column[String]("email")
       def password = column[String]("password")
-      def rollno = column[Int]("password")
-      def * = (id, name, email, password ,rollno) <> (Users.tupled, Users.unapply)
+      def rollNumber = column[Int]("roll_number")
+      def * = (id, name, email, password ,rollNumber) <> (Users.tupled, Users.unapply)
     }
 
 
   private val usersTable = TableQuery[UsersTable]
 
   def insert(user: Users): Future[Unit] = {
+    db.run(usersTable += user).map { _ => ()}
+  }
 
-    //db.run(usersTable += user).map { _ => () }
-    Future(())
-    //Future(2)
+  def getByUsername(email: String, password: String): Future[Seq[Users]] = {
+    val query = usersTable.filter(user => user.email === email && user.password === password).result
+    db.run(query)
   }
 }
 
