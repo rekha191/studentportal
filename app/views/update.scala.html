@@ -1,4 +1,5 @@
-
+@import model.Users
+@(users: Users)
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,28 +12,30 @@
 </head>
 <body>
 <div class="container">
-    <h2 style="color:teal;">Registration Form</h2>
-    <form method="post" action="registrationSubmit">
+    <h3 style="color:teal;">Update Form</h3>
+    <form method="post" action="updateSubmit">
         <div class="form-group">
             <label for="name" style="color:teal;"> Name:</label>
-            <input type=text" class="form-control" id="name" placeholder="Enter name" name="name">
+            <input type=text" class="form-control" id="name"  name="name" value="@users.name">
         </div>
 
         <div class="form-group">
             <label for="email" style="color:teal;">Email:</label>
-            <input type=text" class="form-control" id="email" placeholder="Enter email" name="email">
+            <input type=text" class="form-control" id="email" name="email" value="@users.email">
         </div>
         <div class="form-group">
             <label for="password" style="color:teal;">Password:</label>
-            <input type="password" class="form-control" id="password" placeholder="Enter password" name="password">
+            <input type="password" class="form-control" id="password"  name="password" value="@users.password">
         </div>
         <div class="form-group">
             <label for="rollno" style="color:teal;">rollno:</label>
-            <input type="text" class="form-control" id="rollno" placeholder="Enter password" name="rollno">
+            <input type="text" class="form-control" id="rollno"  name="rollno" value="@users.rollNumber" >
         </div>
-
         <div>
-        <button type="submit" value="submit" class="btn btn-default" style="color:teal;">Submit</button>
+            <input type="hidden" name="id" value="@users.id.get"/>
+        </div>
+        <div>
+        <button type="submit" value="update" class="btn btn-default" style="color:teal;">Update</button>
         </div>
     </form>
 </div>

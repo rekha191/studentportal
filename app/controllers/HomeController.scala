@@ -7,8 +7,9 @@ import utils.DateTime
 import play.api.mvc._
 
 class HomeController @Inject() (cc: ControllerComponents) extends AbstractController(cc) {
-  def index = Action {
-    Ok("It works!")
+  def index = Action { implicit request =>
+    //request.
+    Ok("It works!").withNewSession
   }
 
   def studentDetail = Action {

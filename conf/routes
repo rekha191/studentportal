@@ -17,13 +17,26 @@ GET     /validate1                          controllers.HomeController.validateL
 
 
 # Users Controller
+
 GET     /registration                                controllers.UsersController.registration
++nocsrf
 POST    /registrationSubmit                         controllers.UsersController.registrationSubmit()
 
+
 GET    /login                                         controllers.UsersController.login()
++nocsrf
 POST    /loginSubmit                                   controllers.UsersController.loginValidate()
+GET    /profile                                        controllers.UsersController.profile()
 
-
+GET    /update                                             controllers.UsersController.update()
++nocsrf
+POST   /updateSubmit                                         controllers.UsersController.updateSubmit()
+GET    /data                                            controllers.UsersController.data()
+GET    /delete/:id                                      controllers.UsersController.delete(id:Long)
+GET    /payment                                        controllers.FeesController.fees()
++nocsrf
+POST    /studentFees                                controllers.FeesController.studentFees()
+GET    /feeDetail                                     controllers.FeesController.feeDetail()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

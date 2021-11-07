@@ -1,0 +1,65 @@
+@import model.Users
+@(users: Seq[Users])
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <h3 style="color:teal;">Student Registration</h3>
+
+    <form method="post" action="studentFees">
+        <div class="form-group">
+            <label for="userId" style="color:teal;">User Id:</label>
+            <select name="userId">
+                @for(user <- users) {
+                    <option value="@user.id">@user.name</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="amount" style="color:teal;">Amount</label>
+            <input type="text" clarss="form-control" name="amount">
+        </div>
+
+
+
+            <select name="month">
+                <option value="month">Month</option>
+                <option value="jan">Jan</option>
+                <option value="feb">Feb</option>
+                <option value="march">March</option>
+                <option value="april">April</option>
+                <option value="may">May</option>
+                <option value="june">June</option>
+                <option value="july">July</option>
+                <option value="august">August</option>
+                <option value="september">September</option>
+                <option value="october">October</option>
+                <option value="november">November</option>
+                <option value="december">December</option>
+            </select>
+
+
+
+            <select name="year">
+                <option year="year" style="color:teal;">Year</option>
+                <option value="2020" style="color:teal;">2020</option>
+                <option value="2021" style="color:teal;">2021</option>
+            </select> <br> <br>
+
+        <div>
+            <button type="submit" value="submit" class="btn btn-default" style="color:teal;">Submit</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
