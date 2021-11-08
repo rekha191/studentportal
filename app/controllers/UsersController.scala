@@ -58,7 +58,7 @@ class UsersController @Inject()(usersDao: UsersDao ,cc: ControllerComponents) ex
     val id = request.session.get("connected").get.toLong
     val futureResult = usersDao.getById(id)
     futureResult map { res =>
-      println("res>>>>>>>>>>>>" + res)
+      //println("res>>>>>>>>>>>>" + res)
       Ok(views.html.update(res.head))
 
     }

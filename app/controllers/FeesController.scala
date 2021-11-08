@@ -1,11 +1,11 @@
 package controllers
 
 import java.sql.Date
+
 import dao.{FeesDao, UsersDao}
 import javax.inject.Inject
-import model.Fees
+import model.{Fees, Users}
 import play.api.mvc.{AbstractController, ControllerComponents}
-
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -16,7 +16,7 @@ class FeesController @Inject()(feesDao: FeesDao, usersDao: UsersDao ,cc: Control
     }
   }
 
-  def studentFees = Action.async { implicit request =>
+  def feesSubmit = Action.async { implicit request =>
     val bodyOpt: Option[Map[String, Seq[String]]] = request.body.asFormUrlEncoded
     val args = bodyOpt.get
     val userId = args("userId").head.toLong
@@ -35,10 +35,18 @@ class FeesController @Inject()(feesDao: FeesDao, usersDao: UsersDao ,cc: Control
   }
 
   def feeDetail = Action.async { implicit request =>
-    val futureResult = feesDao.getAll
-    futureResult map { res =>
+    val futureResult = feesDao.getUserFees()
+    futureResult map { res: Seq[(Users, Fees)] =>
       //println("res>>>>>>>>>>"+res)
       Ok(views.html.feeDetail(res))
     }
   }
+
+  /*def innerJoin = Action.async { implicit request =>
+    val futureResult = feesDao.innerJoin()
+    futureResult map { res =>
+      //println("res>>>>>>>>>>"+res)
+      Ok(res)
+    }
+  }*/
 }

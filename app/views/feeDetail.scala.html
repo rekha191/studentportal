@@ -1,6 +1,7 @@
 
 @import model.Fees
-@(fees: Seq[Fees])
+@import model.Users
+@(fees: Seq[(Users, Fees)])
 
 <html>
 <head>
@@ -28,7 +29,8 @@ tr:nth-child(even) {
 
 <table>
     <tr>
-        <th>userId</th>
+        <th>Name</th>
+        <th>Email</th>
         <th>month</th>
         <th>year</th>
         <th>amount</th>
@@ -37,9 +39,10 @@ tr:nth-child(even) {
 
 
     </tr>
-    @for( fee <- fees){
+    @for( (user, fee) <- fees){
     <tr>
-        <td>@fee.userId</td>
+        <td>@user.name</td>
+        <td>@user.email</td>
         <td>@fee.month</td>
         <td>@fee.year</td>
         <td>@fee.amount</td>

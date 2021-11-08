@@ -1,22 +1,12 @@
 @import model.Users
 @(users: Users)
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Bootstrap Example</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
-<body>
-<div class="container">
-    <h3 style="color:teal;">Update Form</h3>
+
+@main("Update Profile"){
+<div class="row">
     <form method="post" action="updateSubmit">
         <div class="form-group">
             <label for="name" style="color:teal;"> Name:</label>
-            <input type=text" class="form-control" id="name"  name="name" value="@users.name">
+            <input type=text" class="form-control" id="name" name="name" value="@users.name">
         </div>
 
         <div class="form-group">
@@ -25,19 +15,18 @@
         </div>
         <div class="form-group">
             <label for="password" style="color:teal;">Password:</label>
-            <input type="password" class="form-control" id="password"  name="password" value="@users.password">
+            <input type="password" class="form-control" id="password" name="password" value="@users.password">
         </div>
         <div class="form-group">
             <label for="rollno" style="color:teal;">rollno:</label>
-            <input type="text" class="form-control" id="rollno"  name="rollno" value="@users.rollNumber" >
+            <input type="text" class="form-control" id="rollno" name="rollno" value="@users.rollNumber">
         </div>
         <div>
             <input type="hidden" name="id" value="@users.id.get"/>
         </div>
         <div>
-        <button type="submit" value="update" class="btn btn-default" style="color:teal;">Update</button>
+            <button type="submit" value="update" class="btn btn-default" style="color:teal;">Update</button>
         </div>
     </form>
 </div>
-</body>
-</html>
+}

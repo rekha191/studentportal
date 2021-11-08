@@ -14,7 +14,7 @@ class UsersDao @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
 
   import profile.api._
 
-  private class UsersTable(tag: Tag) extends Table[Users](tag, "users") {
+  class UsersTable(tag: Tag) extends Table[Users](tag, "users") {
 
     def id = column[Option[Long]]("id", O.PrimaryKey, O.AutoInc)
 

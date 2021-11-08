@@ -9,7 +9,7 @@ import slick.jdbc.JdbcProfile
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class FeesDao @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)(implicit executionContext: ExecutionContext)
+class FeesDao @Inject()(protected val dbConfigProvider: DatabaseConfigProvider, usersDao: UsersDao)(implicit executionContext: ExecutionContext)
     extends HasDatabaseConfigProvider[JdbcProfile] {
 
   import profile.api._
@@ -31,15 +31,21 @@ class FeesDao @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)(
     def * = (id, userId, month, year, amount, date) <> (Fees.tupled, Fees.unapply)
   }
 
-  private val studentTable = TableQuery[StudentTable]
+  private val feesTable = TableQuery[StudentTable]
+  private val usersTable = TableQuery[usersDao.UsersTable]
 
   def insert(fee: Fees): Future[Unit] = {
-    val query = studentTable += fee
+    val query = feesTable += fee
     db.run(query).map { _ => () }
   }
 
-  def getAll: Future[Seq[Fees]] = {
-    val query = studentTable.result
+  //def getAll: Future[Seq[Fees]] = {
+  //  val query = feesTable.result
+  //  db.run(query)
+  //}
+
+  def getUserFees(): Future[Seq[(Users, Fees)]] = {
+    val query = usersTable.join(feesTable).on(_.id === _.userId).result
     db.run(query)
   }
 }
