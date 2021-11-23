@@ -1,40 +1,39 @@
+@main("Admission"){
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Bootstrap Example</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
-<body>
-<div class="container">
-    <h2 style="color:teal;">Registration Form</h2>
-    <form method="post" action="registrationSubmit">
-        <div class="form-group">
-            <label for="name" style="color:teal;"> Name:</label>
-            <input type=text" class="form-control" id="name" placeholder="Enter name" name="name">
-        </div>
-
-        <div class="form-group">
-            <label for="email" style="color:teal;">Email:</label>
-            <input type=text" class="form-control" id="email" placeholder="Enter email" name="email">
-        </div>
-        <div class="form-group">
-            <label for="password" style="color:teal;">Password:</label>
-            <input type="password" class="form-control" id="password" placeholder="Enter password" name="password">
-        </div>
-        <div class="form-group">
-            <label for="rollno" style="color:teal;">rollno:</label>
-            <input type="text" class="form-control" id="rollno" placeholder="Enter password" name="rollno">
-        </div>
-
-        <div>
-        <button type="submit" value="submit" class="btn btn-default" style="color:teal;">Submit</button>
-        </div>
-    </form>
+<div class="pagetitle">
+    <h1>Admission</h1>
 </div>
-</body>
-</html>
+
+<section class="section dashboard">
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+            <form method="post" action="registrationSubmit">
+            <div class="form-group">
+                <label for="name" style="color:teal;"> Name:</label>
+                <input type=text" class="form-control" id="name" placeholder="Enter name" name="name">
+            </div>
+
+            <div class="form-group">
+                <label for="email" style="color:teal;">Email:</label>
+                <input type=text" class="form-control" id="email" placeholder="Enter email" name="email">
+            </div>
+            <div class="form-group">
+                <label for="password" style="color:teal;">Password:</label>
+                <input type="password" class="form-control" id="password" placeholder="Enter password" name="password">
+            </div>
+            <div class="form-group">
+                <label for="rollno" style="color:teal;">rollno:</label>
+                <input type="text" class="form-control" id="rollno" placeholder="Enter password" name="rollno">
+            </div>
+
+            <div>
+                <button type="submit" value="submit" class="btn btn-default" style="color:teal;">Submit</button>
+            </div>
+        </form>
+        </div>
+        </div>
+    </div>
+</section>
+
+}

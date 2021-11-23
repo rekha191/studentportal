@@ -1,0 +1,51 @@
+@import model.Users
+@(users: Seq[Users])
+@main("Details"){
+
+<div class="pagetitle">
+    <h1>Student Details</h1>
+</div>
+
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                        <table class="table datatable dataTable-table">
+                        <thead>
+
+                            <tr>
+                                <th scope="col" data-sortable="" style="width: 28.2633%;"><a href="#" class="dataTable-sorter">name</a></th>
+                                <th scope="col" data-sortable="" style="width: 38.1385%;"><a href="#" class="dataTable-sorter">email</a></th>
+                                <th scope="col" data-sortable="" style="width: 9.08059%;"><a href="#" class="dataTable-sorter">password</a></th>
+                                <th scope="col" data-sortable="" style="width: 18.9557%;"><a href="#" class="dataTable-sorter">rollNumber</a></th>
+                                <th scope="col" data-sortable="" style="width: 18.9557%;"><a href="#" class="dataTable-sorter">delete</a></th>
+                                <th scope="col" data-sortable="" style="width: 18.9557%;"><a href="#" class="dataTable-sorter">update</a></th>
+                            </tr>
+
+                            @for( user <- users){
+                             <tr>
+                                <td>@user.name</td>
+                                <td>@user.email</td>
+                                <td>@user.password</td>
+                                <td>@user.rollNumber</td>
+                             <td><a href="/delete/@{user.id}"> Delete</a> </td>
+                                 <td><a href="/update/@{user.id}">update</a> </td>
+
+                            </tr>
+                            }
+                        </thead>
+
+                        </table>
+
+                     </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+}

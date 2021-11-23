@@ -8,6 +8,7 @@ import model.{Fees, Users}
 import play.api.mvc.{AbstractController, ControllerComponents}
 
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 class FeesController @Inject()(feesDao: FeesDao, usersDao: UsersDao ,cc: ControllerComponents) extends AbstractController(cc) {
   def fees = Action.async { implicit request =>
@@ -20,6 +21,7 @@ class FeesController @Inject()(feesDao: FeesDao, usersDao: UsersDao ,cc: Control
     val bodyOpt: Option[Map[String, Seq[String]]] = request.body.asFormUrlEncoded
     val args = bodyOpt.get
     val userId = args("userId").head.toLong
+    println(">>>>>>>>>>>>>>>>="+userId)
     val month = args("month").head
     val year = args("year").head.toInt
     val amount = args("amount").head.toInt
@@ -29,8 +31,10 @@ class FeesController @Inject()(feesDao: FeesDao, usersDao: UsersDao ,cc: Control
     val feesData = Fees(None, userId, month, year, amount, date)
 
     val insertResult = feesDao.insert(feesData)
+    println(s"$insertResult")
     insertResult.map { result =>
-      Ok("registered successfully")
+      Redirect("/feeDetail")
+      //Ok("registered successfully")
     }
   }
 

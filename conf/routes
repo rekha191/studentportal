@@ -28,14 +28,20 @@ GET    /login                                         controllers.UsersControlle
 POST    /loginSubmit                                   controllers.UsersController.loginValidate()
 GET    /profile                                        controllers.UsersController.profile()
 
-GET    /update                                             controllers.UsersController.update()
+GET    /update/:id                                             controllers.UsersController.update(id:Long)
 +nocsrf
 POST   /updateSubmit                                         controllers.UsersController.updateSubmit()
-GET    /data                                            controllers.UsersController.data()
+
+
+GET    /studentDetail                                           controllers.UsersController.studentDetail()
+
 GET    /delete/:id                                      controllers.UsersController.delete(id:Long)
+
 GET    /payment                                        controllers.FeesController.fees()
+
 +nocsrf
 POST    /feesSubmit                                controllers.FeesController.feesSubmit()
+
 GET    /feeDetail                                     controllers.FeesController.feeDetail()
 
 

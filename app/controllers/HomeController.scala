@@ -14,7 +14,6 @@ class HomeController @Inject() (cc: ControllerComponents) extends AbstractContro
 
   def studentDetail = Action {
     var x = 12
-
     var y = 40
     var z = x * y
 

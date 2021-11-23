@@ -3,58 +3,71 @@
 @import model.Users
 @(fees: Seq[(Users, Fees)])
 
+
+
+@main("Details"){
+
+<div class="pagetitle">
+    <h1>Fee Details</h1>
+</div>
+
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                        <table class="table datatable dataTable-table">
+                            <thead>
+
+                            <tr>
+                                <th scope="col" data-sortable="" style="width: 28.2633%;"><a href="#" class="dataTable-sorter">Name</a></th>
+                                <th scope="col" data-sortable="" style="width: 38.1385%;"><a href="#" class="dataTable-sorter">Email</a></th>
+                                <th scope="col" data-sortable="" style="width: 9.08059%;"><a href="#" class="dataTable-sorter">month</a></th>
+                                <th scope="col" data-sortable="" style="width: 18.9557%;"><a href="#" class="dataTable-sorter">year</a></th>
+                                <th scope="col" data-sortable="" style="width: 18.9557%;"><a href="#" class="dataTable-sorter">amount</a></th>
+                                <th scope="col" data-sortable="" style="width: 18.9557%;"><a href="#" class="dataTable-sorter">date</a></th>
+                                <th scope="col" data-sortable="" style="width: 18.9557%;"><a href="#" class="dataTable-sorter">delete</a></th>
+                            </tr>
+
+                            @for( (user, fee) <- fees){
+                            <tr>
+                                <td>@user.name</td>
+                                <td>@user.email</td>
+                                <td>@fee.month</td>
+                                <td>@fee.year</td>
+                                <td>@fee.amount</td>
+                                <td>@fee.date</td>
+
+                                <td><a href="/delete/@{fee.id}"> Delete</a> </td>
+
+                            </tr>
+                            }
+                            <thead>
+                        </table>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+}
+
+
+
+
+
+
+
+
+
 <html>
 <head>
-    <style>
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
-
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
-
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
-</style>
-</head>
-<body>
-
-<h2>HTML Table</h2>
-
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>month</th>
-        <th>year</th>
-        <th>amount</th>
-        <th>date</th>
-        <th>delete</th>
 
 
-    </tr>
-    @for( (user, fee) <- fees){
-    <tr>
-        <td>@user.name</td>
-        <td>@user.email</td>
-        <td>@fee.month</td>
-        <td>@fee.year</td>
-        <td>@fee.amount</td>
-        <td>@fee.date</td>
 
-        <td><a href="/delete/@{fee.id}"> Delete</a> </td>
-
-    </tr>
-    }
-
-</table>
-
-</body>
-</html>
 
