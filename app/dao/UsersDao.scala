@@ -39,7 +39,7 @@ class UsersDao @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
 
   def getByUsername(email: String, password: String): Future[Seq[Users]] = {
     val query = usersTable.filter(usersT => usersT.email === email && usersT.password === password).result
-    db.run(query)
+   db.run(query)
   }
 
   def update(user: Users): Future[Unit] = {

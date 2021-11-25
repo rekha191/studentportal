@@ -56,11 +56,6 @@ class HomeController @Inject() (cc: ControllerComponents) extends AbstractContro
   }
 
 
-  def registration = Action {
-
-    Ok(views.html.registration())
-
-  }
 
   def registrationSubmit = Action { request =>
     val postvals  = request.body.asFormUrlEncoded

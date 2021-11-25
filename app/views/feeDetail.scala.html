@@ -1,11 +1,9 @@
 
 @import model.Fees
 @import model.Users
-@(fees: Seq[(Users, Fees)])
+@(fees: Seq[(Users, Fees)],session:Users)
 
-
-
-@main("Details"){
+@main("Details" ,Some(session) ){
 
 <div class="pagetitle">
     <h1>Fee Details</h1>
@@ -54,19 +52,12 @@
         </div>
     </div>
 </section>
-
 }
 
 
 
 
 
-
-
-
-
-<html>
-<head>
 
 
 

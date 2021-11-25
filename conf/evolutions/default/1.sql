@@ -10,5 +10,7 @@ CREATE TABLE "users" (
     PRIMARY KEY ("id")
 );
 
+
+
 -- !Downs
 --DROP TABLE "users";

@@ -12,8 +12,12 @@ import scala.concurrent.Future
 
 class FeesController @Inject()(feesDao: FeesDao, usersDao: UsersDao ,cc: ControllerComponents) extends AbstractController(cc) {
   def fees = Action.async { implicit request =>
-    usersDao.getAll map { users =>
-      Ok(views.html.payment(users))
+    val  sessionId=request.session.get("connected").get.toLong
+    usersDao.getById(sessionId) flatMap { session: Seq[Users] =>
+
+      usersDao.getAll map { users =>
+        Ok(views.html.payment(users,session.head))
+      }
     }
   }
 
@@ -39,13 +43,16 @@ class FeesController @Inject()(feesDao: FeesDao, usersDao: UsersDao ,cc: Control
   }
 
   def feeDetail = Action.async { implicit request =>
-    val futureResult = feesDao.getUserFees()
-    futureResult map { res: Seq[(Users, Fees)] =>
-      //println("res>>>>>>>>>>"+res)
-      Ok(views.html.feeDetail(res))
+    val sessionId = request.session.get("connected").get.toLong
+      usersDao.getById(sessionId) flatMap { session: Seq[Users] =>
+
+      val futureResult = feesDao.getUserFees()
+      futureResult map { res =>
+        //println("res>>>>>>>>>>"+res)
+        Ok(views.html.feeDetail(res,session.head))
+      }
     }
   }
-
   /*def innerJoin = Action.async { implicit request =>
     val futureResult = feesDao.innerJoin()
     futureResult map { res =>

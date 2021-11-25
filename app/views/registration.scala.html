@@ -1,4 +1,6 @@
-@main("Admission"){
+@import model.Users
+@(session:Users)
+@main("Admission", Some(session)){
 
 <div class="pagetitle">
     <h1>Admission</h1>

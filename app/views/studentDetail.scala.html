@@ -1,6 +1,6 @@
 @import model.Users
-@(users: Seq[Users])
-@main("Details"){
+@(users: Seq[Users], session: Users)
+@main("Details", Some(session)){
 
 <div class="pagetitle">
     <h1>Student Details</h1>

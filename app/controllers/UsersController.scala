@@ -9,10 +9,13 @@ import scala.concurrent.Future
 
 class UsersController @Inject()(usersDao: UsersDao ,cc: ControllerComponents) extends AbstractController(cc) {
 
-  def registration = Action { implicit request =>
-    Ok(views.html.registration())
+  def registration = Action.async { implicit request =>
+    val id = request.session.get("connected").get.toLong
+    val futureResult = usersDao.getById(id)
+    futureResult map { res: Seq[Users] =>
+      Ok(views.html.registration(res.head))
+    }
   }
-
   def registrationSubmit = Action.async { implicit request =>
     val bodyOpt = request.body.asFormUrlEncoded
     println(s"$bodyOpt")
@@ -21,9 +24,9 @@ class UsersController @Inject()(usersDao: UsersDao ,cc: ControllerComponents) ex
     val email = args("email").head
     val password = args("password").head
     val rollno = args("rollno").head.toInt
-    val usersData = Users(None, name, email, password, rollno)
-    val insertResult = usersDao.insert(usersData)
-    insertResult.map { result =>
+    val usersData: Users = Users(None, name, email, password, rollno)
+    val insertResult: Future[Unit] = usersDao.insert(usersData)
+    insertResult.map { result: Unit =>
       //Ok("registered successfully")
       Redirect("/studentDetail")
     }
@@ -38,20 +41,23 @@ class UsersController @Inject()(usersDao: UsersDao ,cc: ControllerComponents) ex
     val args = bodyOpt.get
     val email = args("email").head
     val password = args("password").head
-    val loginData: Future[Seq[Users]] = usersDao.getByUsername(email, password)
+    val loginData= usersDao.getByUsername(email, password)
     loginData.map { result: Seq[Users] =>
-      //println("result>>>>>>>>>>>>" + result)
       result.nonEmpty match {
-        case true => Redirect("/profile").withSession("connected" -> result.head.id.getOrElse(0).toString)
+        case true => Redirect("/dashboard").withSession("connected" -> result.head.id.getOrElse(0).toString)
         case false => NotFound("Users or password is not correct")
       }
     }
   }
 
-  def profile = Action { implicit request =>
-    //Ok(views.html.profile()
-    Ok(views.html.dashboard())
+  def dashboard = Action.async { implicit request =>
+    val id = request.session.get("connected").get.toLong
+    val futureResult = usersDao.getById(id)
+    futureResult map { res: Seq[Users] =>
+      Ok(views.html.dashboard(res.head))
+    }
   }
+
 
   def update(id:Long) = Action.async { implicit request =>
     //val id = request.session.get("connected").get.toLong
@@ -79,10 +85,24 @@ class UsersController @Inject()(usersDao: UsersDao ,cc: ControllerComponents) ex
   }
 
   def studentDetail = Action.async { implicit request =>
-    val futureResult = usersDao.getAll
-    futureResult map { res =>
-      Ok(views.html.studentDetail(res))
+    val sessionId=request.session.get("connected").get.toLong
+
+    /*for {
+      session <-  usersDao.getById(sessionId)
+      res <- usersDao.getAll
+    } yield  Ok(views.html.studentDetail(res, session.head))*/
+
+
+    usersDao.getById(sessionId) flatMap { session =>
+
+      usersDao.getAll map { res =>
+        Ok(views.html.studentDetail(res, session.head))
+      }
+
     }
+
+
+
   }
 
   def delete(id: Long) = Action.async { implicit request =>

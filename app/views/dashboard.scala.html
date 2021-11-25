@@ -1,4 +1,7 @@
-@main("Dashboard"){
+@import model.Users
+@(session: Users)
+
+@main("Dashboard", Some(session)){
 
 
 <div class="pagetitle">

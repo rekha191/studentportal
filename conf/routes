@@ -26,7 +26,7 @@ POST    /registrationSubmit                         controllers.UsersController.
 GET    /login                                         controllers.UsersController.login()
 +nocsrf
 POST    /loginSubmit                                   controllers.UsersController.loginValidate()
-GET    /profile                                        controllers.UsersController.profile()
+GET    /dashboard                                        controllers.UsersController.dashboard()
 
 GET    /update/:id                                             controllers.UsersController.update(id:Long)
 +nocsrf

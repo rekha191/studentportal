@@ -1,6 +1,7 @@
 @import model.Users
-@(users: Seq[Users])
-@main("payment"){
+@(users: Seq[Users], session:Users)
+
+@main("payment",Some(session)){
 
 <div class="container">
     <h4 style="color:teal;">Pay Fees</h4>
