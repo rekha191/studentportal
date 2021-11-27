@@ -16,6 +16,7 @@ class UsersController @Inject()(usersDao: UsersDao ,cc: ControllerComponents) ex
       Ok(views.html.registration(res.head))
     }
   }
+
   def registrationSubmit = Action.async { implicit request =>
     val bodyOpt = request.body.asFormUrlEncoded
     println(s"$bodyOpt")
@@ -41,7 +42,7 @@ class UsersController @Inject()(usersDao: UsersDao ,cc: ControllerComponents) ex
     val args = bodyOpt.get
     val email = args("email").head
     val password = args("password").head
-    val loginData= usersDao.getByUsername(email, password)
+    val loginData = usersDao.getByUsername(email, password)
     loginData.map { result: Seq[Users] =>
       result.nonEmpty match {
         case true => Redirect("/dashboard").withSession("connected" -> result.head.id.getOrElse(0).toString)
@@ -52,14 +53,14 @@ class UsersController @Inject()(usersDao: UsersDao ,cc: ControllerComponents) ex
 
   def dashboard = Action.async { implicit request =>
     val id = request.session.get("connected").get.toLong
-    val futureResult = usersDao.getById(id)
-    futureResult map { res: Seq[Users] =>
-      Ok(views.html.dashboard(res.head))
+      usersDao.getById(id) map { session =>
+
+      Ok(views.html.dashboard(session.head))
     }
   }
 
 
-  def update(id:Long) = Action.async { implicit request =>
+  def update(id: Long) = Action.async { implicit request =>
     //val id = request.session.get("connected").get.toLong
     val futureResult = usersDao.getById(id)
     futureResult map { res =>
@@ -84,8 +85,16 @@ class UsersController @Inject()(usersDao: UsersDao ,cc: ControllerComponents) ex
     }
   }
 
+
+  def delete(id:Long)=Action.async { implicit request =>
+    val futureResult = usersDao.delete(id)
+    futureResult map { res =>
+      Redirect("/studentDetail")
+    }
+  }
+
   def studentDetail = Action.async { implicit request =>
-    val sessionId=request.session.get("connected").get.toLong
+    val sessionId = request.session.get("connected").get.toLong
 
     /*for {
       session <-  usersDao.getById(sessionId)
@@ -94,21 +103,9 @@ class UsersController @Inject()(usersDao: UsersDao ,cc: ControllerComponents) ex
 
 
     usersDao.getById(sessionId) flatMap { session =>
-
       usersDao.getAll map { res =>
         Ok(views.html.studentDetail(res, session.head))
       }
-
-    }
-
-
-
-  }
-
-  def delete(id: Long) = Action.async { implicit request =>
-    val futureResult = usersDao.delete(id)
-    futureResult map { res =>
-      Redirect("/studentDetail")
     }
   }
 

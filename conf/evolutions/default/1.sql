@@ -10,7 +10,9 @@ CREATE TABLE "users" (
     PRIMARY KEY ("id")
 );
 
-
+INSERT INTO "users" ("name", "email", "password", "roll_number")
+VALUES ('rekha','rkhyadav191@gmail.com','12345','10');
 
 -- !Downs
 --DROP TABLE "users";
+

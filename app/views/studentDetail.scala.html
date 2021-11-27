@@ -1,5 +1,6 @@
 @import model.Users
 @(users: Seq[Users], session: Users)
+
 @main("Details", Some(session)){
 
 <div class="pagetitle">
@@ -32,7 +33,7 @@
                                 <td>@user.password</td>
                                 <td>@user.rollNumber</td>
                              <td><a href="/delete/@{user.id}"> Delete</a> </td>
-                                 <td><a href="/update/@{user.id}">update</a> </td>
+                                 <td><a href="/user/update/@{user.id}">update</a> </td>
 
                             </tr>
                             }

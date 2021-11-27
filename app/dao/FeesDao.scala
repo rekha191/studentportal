@@ -48,6 +48,11 @@ class FeesDao @Inject()(protected val dbConfigProvider: DatabaseConfigProvider, 
     val query = usersTable.join(feesTable).on(_.id === _.userId).result
     db.run(query)
   }
+
+  def delete(id: Long): Future[Unit] = {
+    val query = feesTable.filter(_.id === id).delete
+    db.run(query).map(_ => ())
+  }
 }
 
 

@@ -13,3 +13,5 @@ CREATE TABLE "fee_details" (
 
 -- !Downs
 --DROP TABLE "users";
+
+
