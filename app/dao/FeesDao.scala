@@ -39,20 +39,27 @@ class FeesDao @Inject()(protected val dbConfigProvider: DatabaseConfigProvider, 
     db.run(query).map { _ => () }
   }
 
-  //def getAll: Future[Seq[Fees]] = {
-  //  val query = feesTable.result
-  //  db.run(query)
-  //}
+  def getAll: Future[Seq[Fees]] = {
+    val query = feesTable.result
+    db.run(query)
+  }
 
   def getUserFees(): Future[Seq[(Users, Fees)]] = {
     val query = usersTable.join(feesTable).on(_.id === _.userId).result
     db.run(query)
   }
 
+
   def delete(id: Long): Future[Unit] = {
     val query = feesTable.filter(_.id === id).delete
     db.run(query).map(_ => ())
   }
-}
 
+  def searchFees(month: String, year: Int): Future[Seq[(Users, Fees)]] = {
+    val feesF = feesTable.filter(feesT => feesT.month === month && feesT.year === year)
+    val query = usersTable.join(feesF ).on(_.id === _.userId).result
+     // .filter(x => x._2.month === month && x._2.year === year).
+    db.run(query)
+  }
+}
 

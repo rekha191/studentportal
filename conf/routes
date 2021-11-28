@@ -21,14 +21,14 @@ GET    /login                                         controllers.UsersControlle
 POST    /loginSubmit                                   controllers.UsersController.loginValidate()
 GET    /dashboard                                        controllers.UsersController.dashboard()
 
-GET    /update/:id                                             controllers.UsersController.update(id:Long)
+GET    /user/update/:id                                             controllers.UsersController.update(id:Long)
 +nocsrf
 POST   /updateSubmit                                         controllers.UsersController.updateSubmit()
 
 
 GET    /studentDetail                                           controllers.UsersController.studentDetail()
 
-GET    /users/delete/:id                                      controllers.UsersController.delete(id:Long)
+GET    /user/delete/:id                                      controllers.UsersController.delete(id:Long)
 
 GET    /payment                                        controllers.FeesController.fees()
 
@@ -38,7 +38,8 @@ POST    /feesSubmit                                controllers.FeesController.fe
 GET    /feeDetail                                     controllers.FeesController.feeDetail()
 
 GET    /fees/delete/:id                                      controllers.FeesController.delete(id:Long)
-
++nocsrf
+POST   /searchFees                                       controllers.FeesController.searchFees()
 
 
 # Map static resources from the /public folder to the /assets URL path

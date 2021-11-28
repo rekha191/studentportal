@@ -46,26 +46,34 @@ class FeesController @Inject()(feesDao: FeesDao, usersDao: UsersDao ,cc: Control
     val sessionId = request.session.get("connected").get.toLong
     usersDao.getById(sessionId) flatMap { session: Seq[Users] =>
 
-      val futureResult = feesDao.getUserFees()
-      futureResult map { res =>
+
+      val futureResult: Future[Seq[(Users, Fees)]] = feesDao.getUserFees()
+      futureResult map { res: Seq[(Users, Fees)] =>
         //println("res>>>>>>>>>>"+res)
         Ok(views.html.feeDetail(res, session.head))
       }
     }
   }
 
-  /*def innerJoin = Action.async { implicit request =>
-    val futureResult = feesDao.innerJoin()
-    futureResult map { res =>
-      //println("res>>>>>>>>>>"+res)
-      Ok(res)
-    }
-  }*/
 
   def delete(id: Long) = Action.async { implicit request =>
     val futureResult = feesDao.delete(id)
     futureResult map { res =>
       Redirect("/feeDetail")
+    }
+  }
+
+  def searchFees = Action.async { implicit request =>
+    val bodyOpt: Option[Map[String, Seq[String]]] = request.body.asFormUrlEncoded
+    val args: Map[String, Seq[String]] =bodyOpt.get
+    val month = args("month").head
+    val year = args("year").head.toInt
+    //val feeData=Fees(month,year)
+    val sessionId = request.session.get("connected").get.toLong
+    usersDao.getById(sessionId) flatMap { session: Seq[Users] =>
+      feesDao.searchFees(month, year) map { res =>
+        Ok(views.html.feeDetail(res, session.head))
+      }
     }
   }
 }

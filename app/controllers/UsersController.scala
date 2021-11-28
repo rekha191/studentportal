@@ -1,13 +1,14 @@
 
 package controllers
 import scala.concurrent.ExecutionContext.Implicits.global
-import dao.UsersDao
+import dao.{FeesDao, UsersDao}
 import javax.inject.Inject
-import model.Users
+import model.{Fees, Users}
 import play.api.mvc._
+
 import scala.concurrent.Future
 
-class UsersController @Inject()(usersDao: UsersDao ,cc: ControllerComponents) extends AbstractController(cc) {
+class UsersController @Inject()(usersDao: UsersDao , feesDao: FeesDao, cc: ControllerComponents) extends AbstractController(cc) {
 
   def registration = Action.async { implicit request =>
     val id = request.session.get("connected").get.toLong
@@ -18,7 +19,7 @@ class UsersController @Inject()(usersDao: UsersDao ,cc: ControllerComponents) ex
   }
 
   def registrationSubmit = Action.async { implicit request =>
-    val bodyOpt = request.body.asFormUrlEncoded
+    val bodyOpt: Option[Map[String, Seq[String]]] = request.body.asFormUrlEncoded
     println(s"$bodyOpt")
     val args = bodyOpt.get
     val name = args("name").head
@@ -53,13 +54,20 @@ class UsersController @Inject()(usersDao: UsersDao ,cc: ControllerComponents) ex
 
   def dashboard = Action.async { implicit request =>
     val id = request.session.get("connected").get.toLong
-      usersDao.getById(id) map { session =>
+    usersDao.getById(id) flatMap { session =>
 
-      Ok(views.html.dashboard(session.head))
+      usersDao.getAll flatMap { res =>
+        val totalUser = res.size
+
+        feesDao.getAll map { feesDetails =>
+          val amountSeq = feesDetails.map(_.amount)
+          val totalFees: Int = amountSeq.sum
+
+          Ok(views.html.dashboard(session.head, totalUser,totalFees))
+        }
+      }
     }
   }
-
-
   def update(id: Long) = Action.async { implicit request =>
     //val id = request.session.get("connected").get.toLong
     val futureResult = usersDao.getById(id)
@@ -86,7 +94,7 @@ class UsersController @Inject()(usersDao: UsersDao ,cc: ControllerComponents) ex
   }
 
 
-  def delete(id:Long)=Action.async { implicit request =>
+  def delete(id: Long) = Action.async { implicit request =>
     val futureResult = usersDao.delete(id)
     futureResult map { res =>
       Redirect("/studentDetail")
@@ -110,6 +118,4 @@ class UsersController @Inject()(usersDao: UsersDao ,cc: ControllerComponents) ex
   }
 
 }
-
-
 
